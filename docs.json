@@ -60,7 +60,12 @@
               "version-0-6-3"
             ]
           },
-          "use-case"
+          {
+            "group": "Examples",
+            "pages": [
+              "managing-workflows"
+            ]
+          }
         ]
       },
       {
