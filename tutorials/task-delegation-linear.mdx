@@ -3,47 +3,47 @@ title: "Automating Linear Tickets via DeepVista Task Delegation"
 description: "Learn how to use DeepVista Task Delegation to let a locally-registered CLI agent create Linear tickets headlessly, keeping credentials on your own machine."
 ---
 
-# 教程：通过 DeepVista 任务委派自动创建 Linear Ticket
+# Tutorial: Automating Linear Ticket Creation via DeepVista Task Delegation
 
-## 1. 概述 (Overview)
+## 1. Overview
 
-DeepVista 提供了强大的 **任务委派 (Task Delegation)** 功能。当云端 Agent 遇到需要本地环境、特定 CLI 或特定凭证（如 API 密钥）的操作时，可以将任务打包为 `task` 卡片，分发给用户本地注册的 CLI Agent。
+DeepVista provides a powerful **Task Delegation** feature. When a cloud agent encounters an operation that requires a local environment, a specific CLI, or particular credentials (such as an API key), it can package the work as a `task` card and dispatch it to a CLI agent registered on the user's local machine.
 
-本教程将展示如何配置并使用 DeepVista 任务委派功能，实现 headless 自动创建 Linear Ticket。
+This tutorial demonstrates how to configure and use DeepVista Task Delegation to create Linear tickets headlessly and automatically.
 
 ---
 
-## 2. 前提条件 (Prerequisites)
+## 2. Prerequisites
 
-1. **注册并运行本地 CLI Agent**：
-   在本地机器（如 Linux 服务器、Mac 等）上运行以下命令，完成设备注册与轮询服务启动：
+1. **Register and run a local CLI Agent**:
+   On your local machine (e.g., a Linux server, Mac, etc.), run the following commands to register the device and start the polling service:
    ```bash
    deepvista agents register
    deepvista tasks run
    ```
-2. **配置 Linear API 凭证**：
-   在运行 `deepvista tasks run` 的终端或环境变量配置文件中导出你的 Linear 访问令牌：
+2. **Configure Linear API credentials**:
+   In the terminal where you run `deepvista tasks run`, or in your environment variable configuration file, export your Linear access token:
    ```bash
    export LINEAR_TOKEN="your_linear_api_token"
    ```
-   *注：Agent 会在本地环境中安全地检索此变量，绝不会将凭证明文上传或泄露到日志中。*
+   *Note: The agent retrieves this variable securely within your local environment and never uploads the credential in plaintext or leaks it to logs.*
 
 ---
 
-## 3. 步骤详解 (Step-by-Step Guide)
+## 3. Step-by-Step Guide
 
-### 步骤 1：创建 Task 类型的 Context Card
+### Step 1: Create a Task-type Context Card
 
-在 DeepVista 中，一个 Task 实际上是一个 `type: "task"` 且 `status: "pending"` 的 Context Card。其 `description` 包含 YAML 元数据前缀以及你要执行的具体 Prompt。
+In DeepVista, a Task is essentially a Context Card with `type: "task"` and `status: "pending"`. Its `description` contains a YAML metadata prefix along with the specific prompt you want to execute.
 
-**示例卡片配置：**
+**Example card configuration:**
 - **Type**: `task`
 - **Status**: `pending`
 - **Title**: `Create a test Linear ticket`
 - **Description**:
 ```yaml
 ---
-agent_id: "your-machine-id"  # 填写你注册的本地 Machine ID
+agent_id: "your-machine-id"  # Fill in the local Machine ID you registered
 agent_role: "engineering"
 ---
 Please create a test Linear ticket.
@@ -56,24 +56,24 @@ To do this:
 3. Report the status of the ticket, the ticket key/ID, or a URL to the ticket if successfully created.
 ```
 
-### 步骤 2：云端分发与本地认领
-1. 云端 Agent 会将此任务卡片存入数据库。
-2. 本地 CLI Agent（通过 `deepvista tasks run` 轮询）会检索到该 pending 任务，并在本地调用 Claude 来执行 Prompt：
-   - Claude 检查本地环境变量中的 `LINEAR_TOKEN`。
-   - 使用 GraphQL API 向 Linear 发送 `issueCreate` 请求。
+### Step 2: Cloud Dispatch and Local Claim
+1. The cloud agent stores this task card in the database.
+2. The local CLI agent (polling via `deepvista tasks run`) retrieves the pending task and invokes Claude locally to execute the prompt:
+   - Claude checks the local environment variable `LINEAR_TOKEN`.
+   - It sends an `issueCreate` request to Linear via the GraphQL API.
 
-### 步骤 3：结果沉淀
-执行完成后，本地 Agent 会将运行日志（`## Run`）以及生成的最终结果卡片（`type: "note"`）写入 DeepVista，并自动将 Task 的 `status` 更新为 `completed`。
+### Step 3: Capturing the Results
+Once execution completes, the local agent writes the run log (`## Run`) and the final result card (`type: "note"`) back to DeepVista, and automatically updates the Task's `status` to `completed`.
 
-**最终结果示例**：
+**Example final result**:
 - **Key**: `DV-1373`
 - **Title**: DeepVista Test Ticket
 - **URL**: `https://linear.app/deepvista/issue/DV-1373/deepvista-test-ticket`
 
 ---
 
-## 4. 总结与延伸 (Summary & Next Steps)
+## 4. Summary & Next Steps
 
-通过将 Task 委派给本地 CLI Agent，你可以：
-- **保障安全**：无需将各种 API Token 或 SSH 密钥上传至云端，所有敏感操作和凭证均保留在你的本地/私有环境中。
-- **本地互通**：本地 Agent 可以直接访问你本地的文件系统、数据库或只有局域网能访问的内部服务。
+By delegating Tasks to a local CLI agent, you can:
+- **Stay secure**: There's no need to upload various API tokens or SSH keys to the cloud — all sensitive operations and credentials remain in your local/private environment.
+- **Access local resources**: The local agent can directly reach your local file system, databases, or internal services that are only accessible within your LAN.
