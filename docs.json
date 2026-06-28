@@ -65,6 +65,12 @@
             "pages": [
               "managing-workflows"
             ]
+          },
+          {
+            "group": "Tutorials",
+            "pages": [
+              "tutorials/task-delegation-linear"
+            ]
           }
         ]
       },
