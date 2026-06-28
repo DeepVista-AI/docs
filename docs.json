@@ -65,6 +65,12 @@
             "pages": [
               "managing-workflows"
             ]
+          },
+          {
+            "group": "Tutorials",
+            "pages": [
+              "tutorials/real-time-task-telemetry"
+            ]
           }
         ]
       },
