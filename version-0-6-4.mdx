@@ -1,0 +1,91 @@
+---
+title: "Version 0.6.4"
+---
+
+June 30, 2026
+
+This week we rebuilt the Vistabase experience from the ground up, brought voice-cloning narration to the browser skill, and shipped the daily triage and release-doc pipelines as live cloud-scheduled skills. Here is everything that landed.
+
+---
+
+### **🗂 Vistabase: List + Detail Side-by-Side**
+
+The Vistabase now stays in view while you explore a card. Open a note or card and a detail panel slides in alongside the list — no more losing your place.
+
+- **Parallel-route layout:** The list stays mounted so you can jump between cards without navigating back.
+- **Related cards sheet:** All linked cards surface automatically in the left column of the detail view.
+- **Resize and reorder columns:** Drag column borders to resize, and drag column headers to reorder them.
+- **Multi-filter:** Apply several concurrent filters at once inside any table view.
+
+---
+
+### **⚡ One-Click Prepare Inputs**
+
+Starting a workflow now pre-fills its input fields for you. Click **Prepare Inputs** and DeepVista searches your Vistabase for context that matches the workflow's input fields — then fills them in. The workflow input panel is now a three-tab layout: Vistabase · Webhook · Input Form.
+
+---
+
+### **🗂 Skill Gallery: Grouped Sub-Workflows**
+
+Skills that contain sub-workflows now appear as expandable groups in the gallery. The parent skill shows aggregate status; sub-workflows are listed beneath it so you can see the full picture at a glance.
+
+---
+
+### **🤖 Daily Triage — Now Running Automatically**
+
+The daily triage skill is live on a cloud schedule. Every day it scans your Linear queue, scores tickets, defers stale ones with labels, and surfaces the top priorities — so your backlog stays clean without any manual effort.
+
+---
+
+### **✏️ Edit Workflows Inline**
+
+You no longer need to leave the workflow view to make edits. Click into any workflow and edit it directly inside the main UI. Two new editor shortcuts are also available:
+
+- **Cmd+K** — select any text and open an inline quick-edit overlay.
+- **Cmd+Shift+L** — select text and add it to the embedded chat session, linked by Card ID.
+
+---
+
+### **🔍 Legacy Workflow Format Detection**
+
+Older workflow cards using the pre-0.6 format are now detected automatically on open. A one-click reformat action appears in-line — no manual migration required.
+
+---
+
+### **💬 Chat: Cleaner Navigation and History**
+
+Several chat improvements this week:
+
+- **Session chips navigate by default:** Clicking a chat-session chip takes you straight to that session.
+- **Human-only chat history:** The chat history list now shows only sessions you started — automated agent runs are filtered out.
+- **Hidden "Open chat" on agent cards:** Session cards recorded by the CLI or a background agent no longer show the Open Chat button.
+
+---
+
+### **🎙️ Narrated Browser: Voice Cloning + macOS Desktop**
+
+The narrated-browser skill now captures the full macOS desktop — including the real address bar — and supports three TTS engines:
+
+- **Kokoro** (default, high quality)
+- **Alibaba CosyVoice** (optimized for Chinese and multilingual content)
+- **Qwen voice model** — provide a 10-second voice sample and the narration will sound exactly like you. Per-machine opt-in so each laptop can use a different voice.
+
+*Note: X.com publishing is fully reliable. XiaoHongShu triggered bot detection — use manual posting there for now.*
+
+---
+
+### **🔧 Engineering & Infrastructure**
+
+- **Automated DB migrations:** Migrations now run automatically when PRs merge to staging or production. No manual CLI steps.
+- **Card enrichment — append mode:** Enrichment adds keywords and entities without overwriting previous results.
+- **Run card + card graph:** Every workflow run now has a traceable Run card linked to its outputs. The Runs Hub and fan-out graph are live.
+- **Local task auto-resume:** Local agent tasks reconnect automatically after interruption and support `dvNote` phase annotations for structured audit trails.
+- **Session subtype taxonomy:** Sessions, chats, and workflows are unified in one table, typed by subtype. Enables per-subtype filtering and agent-manageable routing.
+
+---
+
+### **💰 GTM**
+
+- **First paying customer:** CoCreate (design career community, ~150 K members) is on board.
+- **Pricing live:** Three-tier model — Basic, Pro, and Advanced. The starter tier is now called **Pro**.
+- **AI Fund:** Demoed the product to AI Fund (GP connected to the Google CTO office). DeepVista will be featured in their quarterly LP newsletter.
