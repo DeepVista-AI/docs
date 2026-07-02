@@ -67,6 +67,12 @@
               "tutorials/managing-workflows",
               "tutorials/task-delegation-linear"
             ]
+          },
+          {
+            "group": "Tutorials",
+            "pages": [
+              "tutorials/real-time-task-telemetry"
+            ]
           }
         ]
       },
