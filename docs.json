@@ -55,20 +55,16 @@
           {
             "group": "Release Docs",
             "pages": [
-              "version-0-6-1",
-              "version-0-6-2",
-              "version-0-6-3"
-            ]
-          },
-          {
-            "group": "Examples",
-            "pages": [
-              "managing-workflows"
+              "version/version-0-6-1",
+              "version/version-0-6-2",
+              "version/version-0-6-3",
+              "version/version-0-6-4"
             ]
           },
           {
             "group": "Tutorials",
             "pages": [
+              "tutorials/managing-workflows",
               "tutorials/task-delegation-linear"
             ]
           }
